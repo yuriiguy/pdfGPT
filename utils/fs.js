@@ -1,6 +1,5 @@
 const { writeFileSync, readFileSync, existsSync, mkdirSync } = require('fs');
 const { join } = require('path');
-
 function readJsonFile(path) {
   try {
     const string = readFileSync(path).toString();
@@ -17,7 +16,7 @@ function getPdfName(pdfPath) {
 function getPath(pdfName, fileName) {
   const relativeDirPath = `../knowledgeFiles/${pdfName}`;
   const dirPath = join(__dirname, relativeDirPath);
-  // 文件夹初始化
+  // ініціалізація папки
   if (!existsSync(dirPath)) {
     mkdirSync(dirPath);
   }
