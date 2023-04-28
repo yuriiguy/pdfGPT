@@ -1,26 +1,22 @@
 const path = require('path');
 const nodejieba = require('nodejieba');
-
 const LETTERS =
   'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZαβγδεζηθικλμνξοπρστυφχψωΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ'.split('');
-
 nodejieba.load({
   userDict: path.join(__dirname, '../userdict.utf8'),
 });
-
-// 判断是否是疾病介绍
+// Вирішуйте, чи є це впровадження хвороби
 function isDiseaseIntro(tokenLength, joinedContent) {
-  // 比较短就不处理了
+  // Якщо коротше, то не вийде
   if (tokenLength < 2000) {
     return false;
   }
-  // 粗暴的简单判断
-  return !!['重大疾病', '中症疾病', '轻症疾病', '特定心脑血管疾病'].find(
+  // грубе просте судження
+  return !!['Основні хвороби', 'Захворювання середньої тяжкості', 'легке захворювання', 'Специфічні серцево-судинні і цереброваскулярні захворювання'].find(
     disease => joinedContent.indexOf(disease) === 0,
   );
 }
-
-// 疾病介绍的信息太长了，需要阉割一下，舍弃疾病介绍详情
+// Інформація про введення хвороби занадто довга, її потрібно каструвати, а деталі введення хвороби викинуті
 function shortenDiseaseIntro(content) {
   const titleRegExp = /(?=（[0-9]+）)/g;
   const sections = content.split(titleRegExp).map(section => {
@@ -67,11 +63,11 @@ function shortenTableContent(tableContent) {
 
 function shortenSectionContent(sectionContent) {
   const longContent = sectionContent
-    // 去无不需要文案
+    // Обійтися без копірайтингу
     .replaceAll('（见释义）', '')
-    // 减少字符
+    // зменшити символи
     .replaceAll('——', '—')
-    // 全角半角化
+    // на всю ширину напівшир
     .replaceAll('（', '(')
     .replaceAll('）', ')')
     .replaceAll('：', ':')
@@ -81,7 +77,7 @@ function shortenSectionContent(sectionContent) {
     .replaceAll('。', '.')
     .replaceAll('“', `'`)
     .replaceAll('”', `'`)
-    // 去无意义空格
+    // видалити безглузді пробіли
     .replaceAll('. ', '.')
     .replaceAll(` '`, `'`)
     .replaceAll('; ', ';');
