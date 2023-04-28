@@ -1,6 +1,5 @@
 const { createEmbeddingWithCache } = require('./ai');
 const { writeKnowledgeEmbeddings } = require('./fs');
-
 async function buildKnowledgeEmbeddings(knowledge, pdfName) {
   const embeddings = [];
   for (let index = 0; index < knowledge.length; index++) {
@@ -17,8 +16,6 @@ async function buildKnowledgeEmbeddings(knowledge, pdfName) {
 async function buildQuestionEmbedding(question, pdfName) {
   const embedding = await createEmbeddingWithCache(question, pdfName);
   // console.log('createQuestionEmbedding success:', question);
-
   return embedding;
 }
-
 module.exports = { buildKnowledgeEmbeddings, buildQuestionEmbedding };
