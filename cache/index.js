@@ -1,22 +1,18 @@
 const { existsSync, writeFileSync, readFileSync } = require('fs');
 const { join } = require('path');
-
 const getPath = name => join(__dirname, `./files/${name}.json`);
-
 const getJson = path => {
-  // 不存在，返回空对象
+  // не існує, повертає порожній об'єкт
   if (!existsSync(path)) {
     return {};
   }
-  // 读文件
+  // читати файл
   let string = readFileSync(path).toString();
   let cacheJson = {};
-
   try {
-    // 反序列化
+    //десеріалізація
     cacheJson = JSON.parse(string);
   } catch {}
-
   return cacheJson;
 };
 
